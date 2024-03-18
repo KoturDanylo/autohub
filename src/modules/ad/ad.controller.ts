@@ -49,23 +49,23 @@ export class AdController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update ad' })
-  @Put(':adId')
+  @Put(':ad_Id')
   public async update(
-    @Param('adId', ParseUUIDPipe) adId: string,
+    @Param('ad_Id', ParseUUIDPipe) ad_Id: string,
     @CurrentUser() userData: IUserData,
     @Body() dto: UpdateAdDto,
   ): Promise<AdResponseDto> {
-    return await this.adService.update(userData, dto, adId);
+    return await this.adService.update(userData, dto, ad_Id);
   }
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get ad by id' })
-  @Get(':adId')
+  @Get(':ad_Id')
   public async getById(
-    @Param('adId', ParseUUIDPipe) adId: string,
+    @Param('ad_Id', ParseUUIDPipe) ad_Id: string,
     @CurrentUser() userData: IUserData,
   ): Promise<AdResponseDto> {
-    return await this.adService.getById(userData, adId);
+    return await this.adService.getById(userData, ad_Id);
   }
 
   @ApiBearerAuth()
@@ -81,9 +81,9 @@ export class AdController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete ad' })
-  @Delete(':adId')
+  @Delete(':ad_Id')
   public async delete(
-    @Param('adId', ParseUUIDPipe) adId: string,
+    @Param('ad_Id', ParseUUIDPipe) adId: string,
     @CurrentUser() userData: IUserData,
   ): Promise<void> {
     await this.adService.delete(userData, adId);

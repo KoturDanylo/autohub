@@ -18,7 +18,7 @@ const s3Config = getConfigs().s3;
       port: 9000,
       accessKey: s3Config.accessKeyId,
       secretKey: s3Config.secretAccessKey,
-      // useSSL: process.env.MINIO_USE_SSL === 'true',
+      useSSL: process.env.MINIO_USE_SSL === 'true',
     }),
   ],
   controllers: [S3Controller],
