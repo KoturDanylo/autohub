@@ -3,7 +3,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 import { AccountTypeEnum } from '../enums/account-type.enum';
 import { RolesEnum } from '../enums/roles.enum';
 import { TableNameEnum } from '../enums/table-name.enum';
-import { AdvertisementEntity } from './advertisement.entity';
+import { AdEntity } from './ad.entity';
 import { CarEntity } from './car.entity';
 import { BaseModel } from './models/base.model';
 import { RefreshTokenEntity } from './refresh-token.entity';
@@ -42,8 +42,8 @@ export class UserEntity extends BaseModel {
   @OneToMany(() => RefreshTokenEntity, (entity) => entity.user)
   refreshTokens?: RefreshTokenEntity[];
 
-  @OneToMany(() => AdvertisementEntity, (entity) => entity.user)
-  advertisements?: AdvertisementEntity[];
+  @OneToMany(() => AdEntity, (entity) => entity.user)
+  ads?: AdEntity[];
 
   @OneToMany(() => CarEntity, (entity) => entity.user)
   cars?: CarEntity[];

@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import configuration from '../configs/config';
+import { AdModule } from './ad/ad.module';
 import { AdminManagerModule } from './admin-manager/admin-manager.module';
-import { AdvertisementModule } from './advertisement/advertisement.module';
 import { AuthModule } from './auth/auth.module';
 import { CarBrandModelModule } from './car-brand-model/car-brand-model.module';
 import { PostgresModule } from './postgres/postgres.module';
@@ -23,7 +23,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     UserModule,
     CarBrandModelModule,
-    AdvertisementModule,
+    AdModule,
     S3Module,
     AdminManagerModule,
     RepositoryModule,

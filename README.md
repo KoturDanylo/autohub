@@ -1,4 +1,4 @@
-"autohub" is a modern platform developed with Node.js and Nest.js, simplifying the car
+"Autohub" is a modern platform developed with Node.js and Nest.js, simplifying the car
 buying and selling process. It offers robust features like authentication, access control,
 and currency conversion. With built-in validation, data accuracy is ensured. Our focus is
 on user satisfaction, constantly improving functionality for seamless transactions.

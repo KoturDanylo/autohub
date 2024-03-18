@@ -3,7 +3,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { AccountTypeEnum } from '../../../database/enums/account-type.enum';
 import { StatusTypeEnum } from '../../../database/enums/status-type.enum';
 import { IUserData } from '../../auth/interfaces/user-data.interface';
-import { AdvertisementRepository } from '../../repository/services/advertisement.repository';
+import { AdRepository } from '../../repository/services/ad.repository';
 import { UserRepository } from '../../repository/services/user.repository';
 import { UserResponseDto } from '../../user/models/dto/response/user.response.dto';
 import { UserMapper } from '../../user/services/user.mapper';
@@ -13,7 +13,7 @@ import { BaseAdminManagerRequestDto } from '../models/dto/reques/base-admin-mana
 export class AdminManagerService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly advertisementRepository: AdvertisementRepository,
+    private readonly adRepository: AdRepository,
   ) {}
 
   public async setNewRole(
@@ -49,29 +49,26 @@ export class AdminManagerService {
     await this.userRepository.delete(userEntity);
   }
 
-  public async blockAdvertisement(advertisementId: string): Promise<void> {
-    const entity =
-      await this.advertisementRepository.findByIdOrThrow(advertisementId);
+  public async blockAdvertisement(adId: string): Promise<void> {
+    const entity = await this.adRepository.findByIdOrThrow(adId);
     if (entity.status === StatusTypeEnum.BLOCKED) {
       throw new ConflictException('Advertisement is already blocked');
     }
     entity.status = StatusTypeEnum.BLOCKED;
-    await this.advertisementRepository.save(entity);
+    await this.adRepository.save(entity);
   }
 
-  public async unblockAdvertisement(advertisementId: string): Promise<void> {
-    const entity =
-      await this.advertisementRepository.findByIdOrThrow(advertisementId);
+  public async unblockAdvertisement(adId: string): Promise<void> {
+    const entity = await this.adRepository.findByIdOrThrow(adId);
     if (entity.status === StatusTypeEnum.ACTIVE) {
       throw new ConflictException('Advertisement is already active');
     }
     entity.status = StatusTypeEnum.ACTIVE;
-    await this.advertisementRepository.save(entity);
+    await this.adRepository.save(entity);
   }
 
-  public async delete(advertisementId: string): Promise<void> {
-    const entity =
-      await this.advertisementRepository.findByIdOrThrow(advertisementId);
-    await this.advertisementRepository.delete(entity);
+  public async delete(adId: string): Promise<void> {
+    const entity = await this.adRepository.findByIdOrThrow(adId);
+    await this.adRepository.delete(entity);
   }
 }

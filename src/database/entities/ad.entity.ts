@@ -16,7 +16,7 @@ import { StatisticEntity } from './statistic.entity';
 import { UserEntity } from './user.entity';
 
 @Entity(TableNameEnum.ADVERTISEMENT)
-export class AdvertisementEntity extends BaseModel {
+export class AdEntity extends BaseModel {
   @Column('text')
   title: string;
 
@@ -38,16 +38,16 @@ export class AdvertisementEntity extends BaseModel {
 
   @Column()
   user_id: string;
-  @ManyToOne(() => UserEntity, (entity) => entity.advertisements)
+  @ManyToOne(() => UserEntity, (entity) => entity.ads)
   @JoinColumn({ name: 'user_id' })
   user?: UserEntity;
 
   @Column()
   car_id: string;
-  @OneToOne(() => CarEntity, (entity) => entity.advertisement)
+  @OneToOne(() => CarEntity, (entity) => entity.ad)
   @JoinColumn({ name: 'car_id' })
   car?: CarEntity;
 
-  @OneToMany(() => StatisticEntity, (entity) => entity.advertisement)
+  @OneToMany(() => StatisticEntity, (entity) => entity.ad)
   views?: StatisticEntity[];
 }

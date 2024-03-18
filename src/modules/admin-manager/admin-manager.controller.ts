@@ -52,27 +52,21 @@ export class AdminManagerController {
   async deleteUser(@Param('userId') userId: string): Promise<void> {
     await this.adminManagerService.deleteUser(userId);
   }
-  @ApiOperation({ summary: 'Block advertisement' })
-  @Put(':advertisementId')
-  async blockAdvertisement(
-    @Param('advertisementId') advertisementId: string,
-  ): Promise<void> {
-    await this.adminManagerService.blockAdvertisement(advertisementId);
+  @ApiOperation({ summary: 'Block ad' })
+  @Put(':adId')
+  async blockAdvertisement(@Param('adId') adId: string): Promise<void> {
+    await this.adminManagerService.blockAdvertisement(adId);
   }
 
-  @ApiOperation({ summary: 'Unblock advertisement' })
-  @Patch(':advertisementId')
-  async unblockAdvertisement(
-    @Param('advertisementId') advertisementId: string,
-  ): Promise<void> {
-    await this.adminManagerService.unblockAdvertisement(advertisementId);
+  @ApiOperation({ summary: 'Unblock ad' })
+  @Patch(':adId')
+  async unblockAdvertisement(@Param('adId') adId: string): Promise<void> {
+    await this.adminManagerService.unblockAdvertisement(adId);
   }
 
-  @ApiOperation({ summary: 'Delete advertisement' })
-  @Delete(':advertisementId')
-  async delete(
-    @Param('advertisementId') advertisementId: string,
-  ): Promise<void> {
-    await this.adminManagerService.delete(advertisementId);
+  @ApiOperation({ summary: 'Delete ad' })
+  @Delete(':adId')
+  async delete(@Param('adId') adId: string): Promise<void> {
+    await this.adminManagerService.delete(adId);
   }
 }

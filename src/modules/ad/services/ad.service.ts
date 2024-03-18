@@ -6,24 +6,24 @@ import {
 
 import { StatusTypeEnum } from '../../../database/enums/status-type.enum';
 import { IUserData } from '../../auth/interfaces/user-data.interface';
-import { AdvertisementRepository } from '../../repository/services/advertisement.repository';
+import { AdRepository } from '../../repository/services/ad.repository';
 import { CarRepository } from '../../repository/services/car.repository';
 import { CarBrandRepository } from '../../repository/services/car-brand.repository';
 import { CarModelRepository } from '../../repository/services/car-model.repository';
 import { StatisticRepository } from '../../repository/services/statistic.repository';
-import { AdvertisementListRequestDto } from '../models/dto/request/advertisement-list.request.dto';
-import { BaseAdvertisementRequestDto } from '../models/dto/request/base-advertisement.request.dto';
-import { UpdateAdvertisementDto } from '../models/dto/request/update-advertisement.dto';
-import { AdvertisementResponseDto } from '../models/dto/response/advertisement.response.dto';
-import { AdvertisementListResponseDto } from '../models/dto/response/advertisement-list.response.dto';
-import { AdvertisementMapper } from './advertisement.mapper';
+import { AdListRequestDto } from '../models/dto/request/ad-list.request.dto';
+import { BaseAdRequestDto } from '../models/dto/request/base-ad.request.dto';
+import { UpdateAdDto } from '../models/dto/request/update-ad.dto';
+import { AdResponseDto } from '../models/dto/response/ad.response.dto';
+import { AdListResponseDto } from '../models/dto/response/ad-list.response.dto';
+import { AdMapper } from './ad.mapper';
 import { CurrencyService } from './currency.service';
 
 @Injectable()
-export class AdvertisementService {
+export class AdService {
   constructor(
     private readonly currencyService: CurrencyService,
-    private readonly advertisementRepository: AdvertisementRepository,
+    private readonly adRepository: AdRepository,
     private readonly carRepository: CarRepository,
     private readonly carBrandRepository: CarBrandRepository,
     private readonly carModelRepository: CarModelRepository,
@@ -32,8 +32,8 @@ export class AdvertisementService {
 
   public async create(
     userData: IUserData,
-    dto: BaseAdvertisementRequestDto,
-  ): Promise<AdvertisementResponseDto> {
+    dto: BaseAdRequestDto,
+  ): Promise<AdResponseDto> {
     const {
       description,
       body,
@@ -83,87 +83,77 @@ export class AdvertisementService {
       }),
     );
 
-    const advertisementEntity = await this.advertisementRepository.save(
-      this.advertisementRepository.create({
+    const adEntity = await this.adRepository.save(
+      this.adRepository.create({
         ...newAdvertisement,
         car_id: carEntity.id,
         status: StatusTypeEnum.ACTIVE,
       }),
     );
 
-    return AdvertisementMapper.toResponseDto(advertisementEntity, carEntity);
+    return AdMapper.toResponseDto(adEntity, carEntity);
   }
 
   public async update(
     userData: IUserData,
-    dto: UpdateAdvertisementDto,
-    advertisementId: string,
-  ): Promise<AdvertisementResponseDto> {
+    dto: UpdateAdDto,
+    adId: string,
+  ): Promise<AdResponseDto> {
     const { description, body, title, color, mileage, price } = dto;
-    const advertisementDto = { description, body, title };
+    const adDto = { description, body, title };
     const carDto = { color, mileage, price };
-    const advertisementEntity = await this.advertisementRepository.findOneBy({
+    const adEntity = await this.adRepository.findOneBy({
       user_id: userData.userId,
-      id: advertisementId,
+      id: adId,
     });
-    if (!advertisementEntity) {
-      throw new ConflictException(
-        'You are not aloud to update this advertisement',
-      );
+    if (!adEntity) {
+      throw new ConflictException('You are not aloud to update this ad');
     }
     const carEntity = await this.carRepository.findOneBy({
-      id: advertisementEntity.car_id,
+      id: adEntity.car_id,
     });
-    await this.advertisementRepository.save(
-      this.advertisementRepository.merge(advertisementEntity, advertisementDto),
-    );
+    await this.adRepository.save(this.adRepository.merge(adEntity, adDto));
 
     await this.carRepository.save(this.carRepository.merge(carEntity, carDto));
-    return AdvertisementMapper.toResponseDto(advertisementEntity, carEntity);
+    return AdMapper.toResponseDto(adEntity, carEntity);
   }
 
   public async getById(
     userData: IUserData,
-    advertisementId: string,
-  ): Promise<AdvertisementResponseDto> {
-    const advertisementEntity =
-      await this.advertisementRepository.getAdvertisementById(advertisementId);
-    if (advertisementEntity.user_id !== userData.userId) {
+    adId: string,
+  ): Promise<AdResponseDto> {
+    const adEntity = await this.adRepository.getAdvertisementById(adId);
+    if (adEntity.user_id !== userData.userId) {
       await this.statisticRepository.save(
-        this.statisticRepository.create({ advertisement_id: advertisementId }),
+        this.statisticRepository.create({ ad_id: adId }),
       );
     }
-    const { currency, price } = advertisementEntity.car;
+    const { currency, price } = adEntity.car;
     await this.currencyService.convertPriceToUAH(price, currency);
-    return AdvertisementMapper.toResponseDtoById(advertisementEntity);
+    return AdMapper.toResponseDtoById(adEntity);
   }
 
   public async getAll(
     userData: IUserData,
-    query: AdvertisementListRequestDto,
-  ): Promise<AdvertisementListResponseDto> {
-    const [entities, total] = await this.advertisementRepository.getAll(query);
+    query: AdListRequestDto,
+  ): Promise<AdListResponseDto> {
+    const [entities, total] = await this.adRepository.getAll(query);
 
-    return AdvertisementMapper.ToListResponseDto(entities, total, query);
+    return AdMapper.ToListResponseDto(entities, total, query);
   }
 
-  public async delete(
-    userData: IUserData,
-    advertisementId: string,
-  ): Promise<void> {
-    const advertisementEntity = await this.advertisementRepository.findOneBy({
+  public async delete(userData: IUserData, adId: string): Promise<void> {
+    const adEntity = await this.adRepository.findOneBy({
       user_id: userData.userId,
-      id: advertisementId,
+      id: adId,
     });
-    if (!advertisementEntity) {
-      throw new ConflictException(
-        'You are not aloud delete this advertisement',
-      );
+    if (!adEntity) {
+      throw new ConflictException('You are not aloud delete this ad');
     }
     const carEntity = await this.carRepository.findOneBy({
-      id: advertisementEntity.car_id,
+      id: adEntity.car_id,
     });
-    await this.advertisementRepository.delete({ id: advertisementId });
+    await this.adRepository.delete({ id: adId });
 
     await this.carRepository.delete({ id: carEntity.id });
   }

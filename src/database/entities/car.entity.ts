@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 
 import { CurrencyEnum } from '../enums/currency.enum';
 import { TableNameEnum } from '../enums/table-name.enum';
-import { AdvertisementEntity } from './advertisement.entity';
+import { AdEntity } from './ad.entity';
 import { CarBrandEntity } from './car-brand.entity';
 import { CarModelEntity } from './car-model.entity';
 import { BaseModel } from './models/base.model';
@@ -50,6 +50,6 @@ export class CarEntity extends BaseModel {
   @JoinColumn({ name: 'user_id' })
   user?: UserEntity;
 
-  @OneToOne(() => AdvertisementEntity, (entity) => entity.car)
-  advertisement?: AdvertisementEntity;
+  @OneToOne(() => AdEntity, (entity) => entity.car)
+  ad?: AdEntity;
 }

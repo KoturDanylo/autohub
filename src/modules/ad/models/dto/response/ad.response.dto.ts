@@ -1,5 +1,5 @@
-export class AdvertisementResponseDto {
-  advertisement_id: string;
+export class AdResponseDto {
+  ad_id: string;
   title: string;
   description: string;
   body: string;

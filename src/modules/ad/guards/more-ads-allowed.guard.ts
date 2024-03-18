@@ -18,15 +18,15 @@ export class MoreAdvertisementsAllowedGuard implements CanActivate {
 
     const userWithAdvertisement = await this.userRepository.findOne({
       where: { id: userAdvertisementId },
-      relations: ['advertisements'],
+      relations: ['ads'],
     });
 
     if (
       userWithAdvertisement.accountType === AccountTypeEnum.BASE &&
-      userWithAdvertisement.advertisements.length > 0
+      userWithAdvertisement.ads.length > 0
     ) {
       throw new ForbiddenException(
-        `To create more advertisements, you need to upgrade to a ${AccountTypeEnum.PREMIUM} account.`,
+        `To create more ads, you need to upgrade to a ${AccountTypeEnum.PREMIUM} account.`,
       );
     }
 

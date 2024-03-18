@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
-export class AdvertisementListRequestDto {
+export class AdListRequestDto {
   @Type(() => Number)
   @IsInt()
   @Min(1)

@@ -15,7 +15,7 @@ import { TransformHelper } from '../../../../../common/helpers/transform.helper'
 import { CurrencyEnum } from '../../../../../database/enums/currency.enum';
 import { RegionsEnum } from '../../../../../database/enums/regions.enum';
 
-export class BaseAdvertisementRequestDto {
+export class BaseAdRequestDto {
   @ApiProperty()
   @IsString()
   @Length(3, 50)

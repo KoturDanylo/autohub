@@ -1,6 +1,6 @@
 export enum TableNameEnum {
   ROLES = 'roles',
-  ADVERTISEMENT = 'advertisements',
+  ADVERTISEMENT = 'ads',
   STATISTICS = 'statistics',
   CAR_BRANDS = 'car_brands',
   CAR_MODELS = 'car-models',
