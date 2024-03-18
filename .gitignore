@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /build
-/environments
+local.env
 
 autohub-api-db
 autohub-api-s3-data
