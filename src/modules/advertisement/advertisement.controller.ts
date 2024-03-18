@@ -28,8 +28,8 @@ import { AdvertisementResponseDto } from './models/dto/response/advertisement.re
 import { AdvertisementListResponseDto } from './models/dto/response/advertisement-list.response.dto';
 import { AdvertisementService } from './services/advertisement.service';
 
-@ApiTags('Advertisement')
-@Controller('advertisements')
+@ApiTags('Ad')
+@Controller('ad')
 export class AdvertisementController {
   constructor(private readonly advertisementService: AdvertisementService) {}
 
@@ -37,8 +37,7 @@ export class AdvertisementController {
   @CheckRole(RolesEnum.SELLER, RolesEnum.ADMIN, RolesEnum.MANAGER)
   @UseGuards(BadWordsValidation, RolesGuard, MoreAdvertisementsAllowedGuard)
   @ApiOperation({
-    summary:
-      'Create advertisement. Allowed for users with SELLER, ADMIN MANAGER role',
+    summary: 'Create ad',
   })
   @Post()
   public async create(
@@ -49,10 +48,10 @@ export class AdvertisementController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Update advertisement' })
-  @Put(':advertisementId')
+  @ApiOperation({ summary: 'Update ad' })
+  @Put(':adId')
   public async update(
-    @Param('advertisementId', ParseUUIDPipe) advertisementId: string,
+    @Param('adId', ParseUUIDPipe) advertisementId: string,
     @CurrentUser() userData: IUserData,
     @Body() dto: UpdateAdvertisementDto,
   ): Promise<AdvertisementResponseDto> {
@@ -64,17 +63,17 @@ export class AdvertisementController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get advertisement by id' })
-  @Get(':advertisementId')
+  @ApiOperation({ summary: 'Get ad by id' })
+  @Get(':adId')
   public async getById(
-    @Param('advertisementId', ParseUUIDPipe) advertisementId: string,
+    @Param('adId', ParseUUIDPipe) advertisementId: string,
     @CurrentUser() userData: IUserData,
   ): Promise<AdvertisementResponseDto> {
     return await this.advertisementService.getById(userData, advertisementId);
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get all advertisements' })
+  @ApiOperation({ summary: 'Get all ads' })
   @Get()
   public async getAll(
     @CurrentUser() userData: IUserData,
@@ -85,10 +84,10 @@ export class AdvertisementController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Delete own advertisement' })
-  @Delete(':advertisementId')
+  @ApiOperation({ summary: 'Delete ad' })
+  @Delete(':adId')
   public async delete(
-    @Param('advertisementId', ParseUUIDPipe) advertisementId: string,
+    @Param('adId', ParseUUIDPipe) advertisementId: string,
     @CurrentUser() userData: IUserData,
   ): Promise<void> {
     await this.advertisementService.delete(userData, advertisementId);

@@ -21,15 +21,15 @@ import { UserResponseDto } from '../user/models/dto/response/user.response.dto';
 import { BaseAdminManagerRequestDto } from './models/dto/reques/base-admin-manager.request.dto';
 import { AdminManagerService } from './services/admin-manager.service';
 
-@ApiTags('Admin/Manager. This tag is for admin or manager .')
+@ApiTags('Main tag for settings')
 @CheckRole(RolesEnum.ADMIN, RolesEnum.MANAGER)
 @ApiBearerAuth()
 @UseGuards(RolesGuard)
-@Controller('admins/managers')
+@Controller('admin/manager')
 export class AdminManagerController {
   constructor(private readonly adminManagerService: AdminManagerService) {}
 
-  @ApiOperation({ summary: 'Set new role to the user' })
+  @ApiOperation({ summary: 'Set rol for user' })
   @Put(':userId')
   public async setNewRole(
     @CurrentUser() userData: IUserData,

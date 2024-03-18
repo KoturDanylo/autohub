@@ -9,11 +9,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { S3Service } from './services/s3.service';
 import { imageFileFilter } from './utils/file-upload.utils';
 import { photoConfig } from './utils/photo.config';
 
+@ApiBearerAuth()
+@ApiTags('Add Photos')
 @Controller('s3')
 export class S3Controller {
   constructor(private readonly s3Service: S3Service) {}

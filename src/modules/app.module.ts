@@ -6,7 +6,6 @@ import { AdminManagerModule } from './admin-manager/admin-manager.module';
 import { AdvertisementModule } from './advertisement/advertisement.module';
 import { AuthModule } from './auth/auth.module';
 import { CarBrandModelModule } from './car-brand-model/car-brand-model.module';
-import { HealthModule } from './health/health.module';
 import { PostgresModule } from './postgres/postgres.module';
 import { RedisModule } from './redis/redis.module';
 import { RepositoryModule } from './repository/repository.module';
@@ -23,12 +22,11 @@ import { UserModule } from './user/user.module';
     }),
     AuthModule,
     UserModule,
-    AdminManagerModule,
-    AdvertisementModule,
     CarBrandModelModule,
-    HealthModule,
-    RepositoryModule,
+    AdvertisementModule,
     S3Module,
+    AdminManagerModule,
+    RepositoryModule,
   ],
   controllers: [],
   providers: [],

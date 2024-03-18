@@ -23,7 +23,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get your own account' })
+  @ApiOperation({ summary: 'Get account' })
   @Get('me')
   public async findMe(
     @CurrentUser() userData: IUserData,
@@ -32,7 +32,7 @@ export class UserController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Update your own account' })
+  @ApiOperation({ summary: 'Update account' })
   @Put('me')
   public async updateMe(
     @CurrentUser() userData: IUserData,
@@ -42,7 +42,7 @@ export class UserController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Change your own account as seller' })
+  @ApiOperation({ summary: 'Change account as seller' })
   @Put('me/seller')
   public async becomeSeller(@CurrentUser() userData: IUserData): Promise<void> {
     await this.userService.becomeSeller(userData);
@@ -59,7 +59,7 @@ export class UserController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Delete your own account' })
+  @ApiOperation({ summary: 'Delete account' })
   @Delete(':userId')
   public async delete(
     @CurrentUser() userData: IUserData,

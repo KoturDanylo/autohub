@@ -26,7 +26,7 @@ export class AuthController {
   }
 
   @SkipAuth()
-  @ApiOperation({ summary: 'Registration with ADMIN role' })
+  @ApiOperation({ summary: 'Registration for Admin' })
   @Post('sign-up/admin')
   public async signUpAdmin(
     @Body() dto: SignUpRequestDto,
@@ -52,7 +52,7 @@ export class AuthController {
 
   @ApiBearerAuth()
   @UseGuards(JwtRefreshGuard)
-  @ApiOperation({ summary: 'Update token pair' })
+  @ApiOperation({ summary: 'Update token' })
   @Post('refresh')
   public async updateRefreshToken(
     @CurrentUser() userData: IUserData,

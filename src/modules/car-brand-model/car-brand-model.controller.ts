@@ -12,13 +12,13 @@ import { ModelResponseDto } from './models/dto/response/model.response.dto';
 import { ModelListResponseDto } from './models/dto/response/model-list.response.dto';
 import { CarBrandModelService } from './services/car-brand-model.service';
 
-@ApiTags('Brand/model')
+@ApiTags('Add brand or Model')
 @Controller('brands')
 export class CarBrandModelController {
   constructor(private readonly carBrandModelService: CarBrandModelService) {}
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create new brand  name' })
+  @ApiOperation({ summary: 'Create new brand' })
   @Post()
   public async createBrand(
     @CurrentUser() userData: IUserData,
@@ -28,7 +28,7 @@ export class CarBrandModelController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create new model name according to brand name' })
+  @ApiOperation({ summary: 'Create model' })
   @Post('/model')
   public async createModel(
     @CurrentUser() userData: IUserData,

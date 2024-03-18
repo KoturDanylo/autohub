@@ -13,7 +13,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('AutoHub')
-    .setDescription('On this website you can sell and buy a new car 🏎')
+    .setDescription('On this website you can sell own car and buy a new car 🏎')
     .setVersion('1.0.0')
     .addBearerAuth({
       type: 'http',
