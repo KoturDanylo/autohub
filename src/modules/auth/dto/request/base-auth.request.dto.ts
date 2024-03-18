@@ -7,6 +7,7 @@ export class BaseAuthRequestDto extends PickType(BaseUserRequestDto, [
   'name',
   'email',
   'password',
+  'role',
 ]) {
   @IsNotEmpty()
   @IsString()
