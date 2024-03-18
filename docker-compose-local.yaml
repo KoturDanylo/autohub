@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  autohub-postgres:
+    image: postgres:16.1
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    environment:
+      POSTGRES_USER: '${POSTGRES_USER:-user}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-password}'
+      POSTGRES_DB: '${POSTGRES_DB:-autohub}'
+    volumes:
+      - ./autohub-api-db:/var/lib/postgresql/data
+
+  autohub-redis:
+    image: redis:7.2.3
+    ports:
+      - '${REDIS_PORT:-63779}:63779'
+    command: >
+      --requirepass '${REDIS_PASSWORD:-redispass}'
+    restart: unless-stopped
+
+  autoria-2024-s3:
+    image: quay.io/minio/minio:latest
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - ./autohub-api-s3-data:/usr/src/app/s3
+    environment:
+      - MINIO_ROOT_USER=user
+      - MINIO_ROOT_PASSWORD=password
+
+volumes:
+  autohub-db:
+  autohub-s3-data:
