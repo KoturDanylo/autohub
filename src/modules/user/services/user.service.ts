@@ -41,7 +41,7 @@ export class UserService {
     entity.roles = RolesEnum.SELLER;
     await this.userRepository.save(entity);
     throw new HttpException(
-      'Now you are aloud to sell car on our platform',
+      'Now you can sell car on our platform',
       HttpStatus.OK,
     );
   }

@@ -4,6 +4,7 @@ import { IsOptional, IsString, Length, Matches } from 'class-validator';
 
 import { TransformHelper } from '../../../../../common/helpers/transform.helper';
 import { regexConstant } from '../../../../../constants/regex.constants';
+import { AccountTypeEnum } from '../../../../../database/enums/account-type.enum';
 import { RolesEnum } from '../../../../../database/enums/roles.enum';
 
 export class BaseUserRequestDto {
@@ -41,7 +42,12 @@ export class BaseUserRequestDto {
   @IsOptional()
   @IsString()
   @Length(0, 300)
-  role: RolesEnum;
+  roles: RolesEnum;
+
+  @IsOptional()
+  @IsString()
+  @Length(0, 300)
+  accountType: AccountTypeEnum;
 
   @ApiProperty({
     default: 'pasPas12!@',

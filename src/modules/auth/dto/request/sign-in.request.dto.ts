@@ -6,5 +6,6 @@ export class SignInRequestDto extends PickType(BaseAuthRequestDto, [
   'deviceId',
   'email',
   'password',
-  'role',
+  'roles',
+  'accountType',
 ]) {}
